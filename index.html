@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>_RKO_REIGNS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Outfit:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: midnight storm storefront. Glass sticky bar, glowing hero with live "hot right now" panel, scrolling ticker, glass product cards with category icons, outlined wordmark footer. Single dark look by design. */
+:root{
+  --bg:#080b14; --bg2:#0e1426; --card:#0f1527; --fg:#f2f4fa; --muted:#9aa3bd; --line:rgba(255,255,255,.09);
+  --glass:rgba(255,255,255,.04);
+  --accent:#f5b83d; --accent2:#ff8a3d; --accent-fg:#1a1204; --violet:#7c5cff;
+  --c-beauty:#ff7fae; --c-fashion:#7aa7ff; --c-figures:#b890ff; --c-sticks:#4fe0b8;
+  --font-display:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;
+  --font-body:'Outfit','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{position:relative;overflow-x:clip;background:var(--bg);color:var(--fg);font:300 16px/1.6 var(--font-body);margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.aura{position:absolute;inset:0 0 auto;height:900px;pointer-events:none;z-index:0;
+  background:radial-gradient(600px 360px at 78% 8%,rgba(124,92,255,.28),transparent 70%),radial-gradient(520px 340px at 12% 20%,rgba(245,184,61,.16),transparent 70%)}
+.aura::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 70%);mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 70%);opacity:.6}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;
+  background:rgba(8,11,20,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{font:900 28px/1 var(--font-display);letter-spacing:.08em;text-decoration:none;text-transform:uppercase}
+.brand b{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.top nav{display:flex;gap:26px;align-items:center;font-size:14px;color:var(--muted)}
+.top nav a{text-decoration:none;transition:color .2s}
+.top nav a:hover{color:var(--fg)}
+.top nav .ig{color:var(--fg);border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:8px 16px}
+.top nav .ig:hover{border-color:var(--accent)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:48px;padding:84px 0 64px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:500;border:1px solid var(--line);background:var(--glass);padding:7px 14px;border-radius:999px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+h1{font:900 clamp(56px,9.5vw,128px)/.86 var(--font-display);text-transform:uppercase;margin:22px 0 26px;text-wrap:balance}
+h1 .g{background:linear-gradient(100deg,#fff6d6 0%,var(--accent) 45%,var(--accent2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{max-width:52ch;color:var(--muted);font-size:18px;margin:0 0 14px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.cta{display:inline-block;background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--accent-fg);font-weight:600;text-decoration:none;padding:15px 30px;border-radius:999px;letter-spacing:.03em;box-shadow:0 10px 40px -10px rgba(245,184,61,.6);transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 16px 44px -10px rgba(245,184,61,.8)}
+.cta.ghost{background:var(--glass);color:var(--fg);border:1px solid var(--line);box-shadow:none}
+.cta.ghost:hover{border-color:var(--accent)}
+
+.panel{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:22px;padding:28px;overflow:hidden;min-width:0;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.panel svg.bolt{position:absolute;right:-14px;top:-22px;width:150px;height:auto;filter:drop-shadow(0 0 22px rgba(245,184,61,.65));opacity:.9;animation:glow 4s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.55}50%{opacity:1}}
+.count{font:900 92px/1 var(--font-display);background:linear-gradient(180deg,#fff,#aeb7d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.count-label{color:var(--muted);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.hot-title{margin:26px 0 10px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.hotlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.hotlist li{display:flex;align-items:center;gap:12px;font-size:15px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.hotlist li:last-child{border:0;padding-bottom:0}
+.hotlist i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);flex:none}
+
+.ticker{overflow:hidden;border-block:1px solid var(--line);background:var(--glass);margin-bottom:8px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.ticker div{display:flex;gap:44px;width:max-content;padding:16px 0;animation:tick 32s linear infinite;font:800 24px/1 var(--font-display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ticker span::after{content:"\26A1";margin-left:44px;color:var(--accent);font-size:20px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+.controls{position:sticky;top:calc(env(safe-area-inset-top,0px) + 63px);z-index:15;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 0;
+  background:rgba(8,11,20,.8);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 14px var(--font-body);background:var(--glass);color:var(--fg);border:1px solid var(--line);padding:9px 18px;border-radius:999px;cursor:pointer;transition:border-color .2s,transform .2s}
+.chip:hover{border-color:var(--accent);transform:translateY(-1px)}
+.chip[aria-pressed="true"]{background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--accent-fg);border-color:transparent;font-weight:600}
+.search{flex:1 1 220px;max-width:320px;min-width:0}
+.search input{width:100%;background:var(--glass);color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:11px 18px;font:300 15px var(--font-body)}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{border-color:var(--accent);outline:none}
+
+.intro{padding:44px 0 6px;max-width:80ch}
+.intro h2{font:900 clamp(40px,6vw,68px)/.95 var(--font-display);text-transform:uppercase;margin:0 0 14px}
+.intro p{margin:0 0 10px;color:var(--muted);font-size:17px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px;padding:28px 0 36px}
+.card{position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:20px;min-width:0;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--cat) 60%,transparent);box-shadow:0 22px 50px -22px color-mix(in srgb,var(--cat) 70%,transparent)}
+.tile{position:relative;aspect-ratio:16/9;max-width:100%;display:flex;align-items:flex-end;padding:18px;overflow:hidden;
+  background:radial-gradient(260px 160px at 85% 10%,color-mix(in srgb,var(--cat) 45%,transparent),transparent 70%),linear-gradient(135deg,color-mix(in srgb,var(--cat) 20%,#0b1020),#0b1020)}
+.tile .ico{position:absolute;right:16px;top:14px;width:76px;height:76px;color:var(--cat);opacity:.95;filter:drop-shadow(0 0 16px color-mix(in srgb,var(--cat) 60%,transparent))}
+.tile .ico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.tile span.nm{position:relative;z-index:1;font:900 40px/.92 var(--font-display);text-transform:uppercase;letter-spacing:.02em;max-width:70%}
+.hot{position:absolute;top:14px;left:14px;z-index:1;background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--accent-fg);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.body{display:flex;flex-direction:column;gap:10px;padding:20px;flex:1}
+.cat{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cat);font-weight:500}
+.body h3{margin:0;font:800 26px/1.08 var(--font-display);text-transform:uppercase;letter-spacing:.03em}
+.body p{margin:0;color:var(--muted);font-size:15px}
+.facts{display:flex;flex-direction:column;gap:10px;margin:4px 0;padding-top:14px;border-top:1px solid var(--line)}
+.facts div{font-size:14px;color:var(--muted)}
+.facts b{display:block;color:var(--fg);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;margin-bottom:2px}
+.buy{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:10px}
+.buy a{flex:1 1 90px;text-align:center;text-decoration:none;font-size:14px;font-weight:500;padding:11px 8px;border:1px solid var(--line);background:var(--glass);border-radius:999px;transition:all .2s}
+.buy a:first-child{background:var(--fg);color:#0b0f1a;border-color:var(--fg);font-weight:600}
+.buy a:hover{background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--accent-fg);border-color:transparent}
+.empty{padding:48px 0;color:var(--muted)}
+
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:48px 0 24px}
+.box{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:26px;min-width:0}
+.box h4{font:800 24px var(--font-display);text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px}
+.box p{margin:0;color:var(--muted);font-size:15px}
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:36px 0 52px}
+.about h2{grid-column:1/-1;font:900 clamp(36px,5vw,58px)/1 var(--font-display);text-transform:uppercase;margin:0 0 4px}
+
+.mark{font:900 clamp(60px,15vw,200px)/.9 var(--font-display);text-transform:uppercase;letter-spacing:.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.18);text-align:center;margin:30px 0 8px;overflow:hidden;white-space:nowrap}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:20px}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding:48px 0 40px;gap:32px}
+  .top nav a:not(.ig){display:none}
+  .grid{grid-template-columns:1fr}
+  .controls{top:calc(env(safe-area-inset-top,0px) + 58px)}
+}
+@media (prefers-reduced-motion:reduce){.ticker div,.panel svg.bolt{animation:none}.card,.cta,.chip{transition:none}.card:hover,.cta:hover{transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<div class="aura" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top">_RKO_<b>REIGNS</b></a>
+    <nav>
+      <a href="#shop">Trending</a>
+      <a href="#how">How it works</a>
+      <a href="#guide">Buying guide</a>
+      <a class="ig" href="https://www.instagram.com/_RKO_finds" target="_blank" rel="noopener">@_RKO_finds</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <div class="eyebrow"><i></i>Trending products, updated weekly</div>
+      <h1>Find it <span class="g">before</span> everyone has it.</h1>
+      <p class="lede">_RKO_REIGNS is a hand-picked list of products blowing up right now across beauty, fashion, action figures and gaming controllers.</p>
+      <p class="lede">Read why each one is trending, who it suits and what to check before you buy. When you are ready, one tap opens it on Amazon, Flipkart or Meesho so you can compare sellers and prices.</p>
+      <div class="actions">
+        <a class="cta" href="#shop">Browse the picks</a>
+        <a class="cta ghost" href="#guide">Read the buying guide</a>
+      </div>
+    </div>
+    <aside class="panel" aria-label="Catalog summary">
+      <svg class="bolt" viewBox="0 0 100 180" aria-hidden="true"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2c2"/><stop offset="1" stop-color="#f5b83d"/></linearGradient></defs><path d="M62 0 12 98h34L30 180 90 70H55L78 0z" fill="url(#bg1)"/></svg>
+      <div class="count" id="count">24</div>
+      <div class="count-label">Products in the catalog</div>
+      <div class="hot-title">Hot right now</div>
+      <ul class="hotlist" id="hotlist"></ul>
+    </aside>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div id="tick"></div></div>
+
+  <section id="shop" aria-label="Trending products">
+    <div class="controls">
+      <div class="chips" role="group" aria-label="Filter by category" id="chips"></div>
+      <div class="search"><input id="q" type="search" placeholder="Search products" aria-label="Search products"></div>
+    </div>
+    <div class="intro" id="intro"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>Nothing matches that search. Try a different word or pick All.</div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="box"><h4>We spot the trend</h4><p>Each pick is something people are actively searching for, saving and talking about this week. We watch what keeps showing up in short videos, reviews and shopping searches.</p></div>
+    <div class="box"><h4>You choose</h4><p>Filter by category or search by name. Every card explains what the product is, why it is trending, who it is best for and a tip for buying it safely.</p></div>
+    <div class="box"><h4>You buy elsewhere</h4><p>The buttons open a search for that product on each store. Prices, delivery and returns depend on the seller you pick, so compare two or three before you pay.</p></div>
+  </section>
+
+  <section class="about" id="guide">
+    <h2>Buying guide</h2>
+    <div class="box"><h4>Amazon</h4><p>Best for branded items like controllers and licensed figures. Look for "Sold by" and "Fulfilled by Amazon", read the one-star reviews first and check the return window.</p></div>
+    <div class="box"><h4>Flipkart</h4><p>Strong for fashion, sneakers and electronics, with frequent sale days. Filter by "Flipkart Assured" and compare the final price after bank offers.</p></div>
+    <div class="box"><h4>Meesho</h4><p>Known for low prices on fashion, accessories and everyday beauty items. Quality varies by seller, so check seller rating, real customer photos and the return policy before ordering.</p></div>
+    <div class="box"><h4>Spotting fakes</h4><p>Figures, controllers and skincare are copied a lot. Be careful with prices far below the usual range, blurry photos, missing brand logos and sellers with very few ratings.</p></div>
+    <div class="box"><h4>Skincare safety</h4><p>Patch test any new product on a small area first and stop if your skin reacts. For skin problems or allergies, ask a dermatologist before trying something trending.</p></div>
+  </section>
+
+  <div class="mark" aria-hidden="true">_RKO_REIGNS</div>
+  <footer class="foot">
+    <span>_RKO_REIGNS</span>
+    <span>New drops on Instagram: @_RKO_finds</span>
+  </footer>
+</div>
+
+<script>
+var CATS={
+ beauty:{label:'Beauty',color:'var(--c-beauty)',intro:['Beauty trends move fast, and most of them start as a single routine video. These picks are the products that kept getting recommended after the first wave of hype.','Start with the basics (sunscreen, a gentle serum) and add fun items like lip oil on top. Always patch test before using something new on your face.']},
+ fashion:{label:'Fashion',color:'var(--c-fashion)',intro:['Streetwear is all about fit, layers and a few standout pieces. These items mix and match with each other, so one or two of them can change a whole wardrobe.','Check the size chart for every order, because sizing differs a lot between brands and sellers. Fabric details and real customer photos tell you more than the main product picture.']},
+ figures:{label:'Action Figures',color:'var(--c-figures)',intro:['Anime and movie figures are collectibles first and toys second. Demand jumps when a new season, arc or film comes out, and popular figures can go out of stock quickly.','Look for the official brand name on the box, a clear scale (height in cm or inches) and a seller with good ratings. Cheap copies often have rough paint and weak joints.']},
+ sticks:{label:'Joysticks',color:'var(--c-sticks)',intro:['A good controller is the cheapest way to make games feel better, on PC, console or even a phone. These are the pads gamers keep recommending for comfort, battery life and build quality.','Always check which devices a controller supports (PC, PS5, Xbox, Switch, Android, iPhone) before you buy, and whether it connects by Bluetooth, a USB dongle or a cable.']}
+};
+/* [category, name, what it is, why it is trending, best for, buying tip, hot] */
+var P=[
+['beauty','Vitamin C Serum','A lightweight face serum with vitamin C, used in the morning under sunscreen to even out the look of the skin.','Skincare creators keep it in their basic routine, and it is one of the most reviewed beauty items online.','Anyone starting a simple routine who wants a brighter, fresher look.','Pick a bottle with a dropper and dark glass or an opaque pump, since vitamin C loses strength in light. Start every second day.',1],
+['beauty','Lip Oil','A glossy, lightly tinted oil for lips that feels softer and less sticky than classic gloss.','New shades and tints keep launching, and it looks good on camera, so it sells out in colors again and again.','Daily wear, gifting, and anyone who finds matte lipstick drying.','Check the shade swatches on real skin tones in the reviews, not just the brand photo.',1],
+['beauty','SPF 50 Sunscreen Gel','A light gel sunscreen that absorbs fast and leaves no white cast, made for daily face use.','People are moving from heavy creams to gel textures that sit well under makeup and in humid weather.','Oily or combination skin, daily commuters, and anyone who dislikes greasy sunscreen.','Look for "broad spectrum" or PA++++ on the pack and reapply every 2 to 3 hours in strong sun.',0],
+['beauty','Rosemary Hair Oil','A scalp and hair oil made with rosemary, popular for weekly scalp massage routines.','Haircare videos made rosemary oil a social media favorite, and it has stayed popular since.','Anyone who enjoys a weekly hair oiling ritual and likes natural-smelling products.','Do a patch test behind your ear first. Results vary from person to person, so treat it as a routine, not a guarantee.',1],
+['beauty','Under-Eye Hydrogel Patches','Cooling gel patches placed under the eyes for about 15 minutes to refresh the area.','They are a quick step before events, travel or filming, and they are easy to try because of the low price.','Late nights, early mornings and anyone who wants a quick pick-me-up ritual.','Keep the pack in the fridge for an extra cooling feel, and buy a small pack first to see if you like them.',0],
+['beauty','Gua Sha Facial Tool','A smooth stone or resin tool that is gently glided over the face during a skincare routine.','It shows up in relaxing evening routines and is loved as a low-cost gift.','Anyone who wants a calm five-minute self-care habit.','Use it with a face oil or serum so it glides, press lightly and clean it after each use.',0],
+['fashion','Oversized Graphic Tee','A heavy cotton drop-shoulder t-shirt with a large print, worn loose for a streetwear look.','It is the easiest way to get the streetwear style, and prints from anime and movies are everywhere.','Everyday wear with cargos, jeans or shorts, for teens and young adults.','Choose 220 GSM or heavier cotton for a premium feel and read size charts carefully, because oversized fits vary by seller.',1],
+['fashion','Baggy Cargo Pants','Wide-leg pants with large side pockets, made from cotton twill or ripstop.','Loose fits replaced skinny jeans, and cargos pair well with both tees and hoodies.','Casual outfits, travel days and anyone who likes pockets.','Check the waist stretch and the length in the size chart, and look for reviews that include real photos.',1],
+['fashion','Chunky Sneakers','Thick-sole sneakers with a bold shape that add height and match almost any casual outfit.','White and two-tone chunky pairs show up in nearly every street-style feed.','College, outings and everyday wear when you want comfort with style.','Compare the weight and cushioning in reviews, and order your normal size unless many buyers say it runs small.',0],
+['fashion','Crossbody Sling Bag','A compact bag worn across the chest that holds a phone, wallet and keys.','It keeps your hands free and works as a safer alternative to a back pocket.','Commuters, travelers and anyone who dislikes carrying a full backpack.','Look for water-resistant fabric, sturdy zips and an adjustable strap with a metal buckle.',0],
+['fashion','Retro Sunglasses','Slim and wrap-around frames in styles that were popular in the 2000s.','Retro eyewear is back, and a pair of sunglasses is one of the cheapest ways to change your look.','Sunny days, trips and finishing off an outfit.','Pick lenses marked UV400 for sun protection, and check the frame width so they fit your face.',0],
+['fashion','Layered Chain Necklace','A stack of stainless steel chains of different lengths worn together.','Stackable jewelry is easy to style and is a popular gift for friends and partners.','Daily wear with tees and shirts, and gifting.','Choose stainless steel if you want it to stay shiny and avoid skin reactions.',0],
+['figures','Thor Collectible Figure','A figure of the god of thunder with hammer and cape, made for shelf display and photos.','Thunder-god style is popular with fans, and Thor collectibles get fresh attention with every new Marvel release.','Marvel fans and anyone building a desk or shelf display.','Check the scale (usually 6 or 7 inch) and look for official Marvel or Hasbro branding on the box.',1],
+['figures','Itachi Uchiha Figure','A detailed Naruto figure of Itachi in his Akatsuki cloak, often with sharingan eye parts.','Itachi is regularly ranked among the most loved anime characters, so demand stays high all year.','Naruto fans and anime collectors.','Look at the paint on the eyes in customer photos, since that is where cheap copies fail first.',1],
+['figures','Goku Ultra Instinct Figure','A Dragon Ball figure of Goku in his silver-haired Ultra Instinct form, usually with a dynamic pose.','Dragon Ball keeps gaining new fans, and the Ultra Instinct form is one of the most popular for display.','Dragon Ball fans and desk setups.','Check the height in the listing and ask whether a stand is included, since tall poses need one.',0],
+['figures','Luffy Gear 5 Figure','A One Piece figure of Luffy in his white-haired Gear 5 form.','The latest story arcs made this form a fan favorite, and new figures sell out quickly.','One Piece fans and anime collectors.','Choose sellers who show the real box and check that spare hands or effect parts are included.',1],
+['figures','Tanjiro Demon Slayer Figure','A figure of Tanjiro with his water-breathing effect parts and sword.','Demon Slayer art is bright and eye-catching, which makes these figures stand out on any shelf.','Demon Slayer fans and gift buyers.','Read reviews about sword strength and paint quality, and handle effect parts gently.',0],
+['figures','Spider-Man Articulated Figure','A posable Spider-Man figure with many joints for action poses.','Posable figures are popular for photos and short videos, and Spider-Man is a classic.','Collectors who like to change poses and take photos.','Look for "articulated" with joint counts in the listing, and check for sealed packaging on arrival.',0],
+['sticks','Wireless Game Controller (Xbox)','A comfortable wireless pad with long battery life that works on Xbox, PC and many phones.','It is the go-to PC controller because almost every game supports it without any setup.','PC gamers, console players and anyone who wants a reliable all-rounder.','Check whether the listing includes batteries or a rechargeable pack, and buy from an authorized seller.',1],
+['sticks','DualSense Controller (PS5)','The PlayStation 5 controller with adaptive triggers and detailed vibration.','Games feel more physical with it, and it also works on PC and some phones.','PlayStation players and anyone who wants the most advanced feel.','Verify the model and region on the box, and test the triggers and buttons on arrival so you can return quickly if needed.',1],
+['sticks','8BitDo Ultimate Controller','A premium third-party pad with a charging dock and a very clean build.','Gamers like it as a more affordable alternative to first-party pads with extra features.','PC and Switch players who want a comfortable, well-built controller.','Pick the version for your platform (2.4G dongle or Bluetooth) before you order.',0],
+['sticks','Switch Pro Controller','A full-size controller with a good d-pad and long battery life for Nintendo Switch and PC.','It is the most comfortable way to play on the TV and is great for platformers and fighting games.','Nintendo fans and anyone who loves a good d-pad.','Be careful with very cheap copies and always check for a seal and official packaging.',0],
+['sticks','Hall Effect Thumbsticks','Replacement thumbsticks that use magnets instead of physical contacts, which helps prevent stick drift.','Drift is a common complaint, and this upgrade is a cheap way to keep a favorite controller alive.','Gamers whose sticks have started to drift, and anyone who likes to tinker.','Confirm they are compatible with your exact controller model before you buy.',0],
+['sticks','Mobile Game Controller','A clip-on controller that holds your phone and adds physical buttons.','Mobile gaming and cloud gaming are growing, and a real controller feels far better than touch screens.','Phone gamers and cloud gaming fans.','Check phone size and port type (USB-C or Lightning) and whether the case fits your phone.',0]
+];
+var STORES=[['Amazon','https://www.amazon.in/s?k='],['Flipkart','https://www.flipkart.com/search?q='],['Meesho','https://www.meesho.com/search?q=']];
+var STORES=[['Amazon','https://www.amazon.in/s?k='],['Flipkart','https://www.flipkart.com/search?q='],['Meesho','https://www.meesho.com/search?q=']];
+var ICONS={
+ beauty:'<svg viewBox="0 0 24 24"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>',
+ fashion:'<svg viewBox="0 0 24 24"><path d="M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 01-8 0z"/></svg>',
+ figures:'<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M6 21v-6a6 6 0 0112 0v6M3 11l3 2M21 11l-3 2"/></svg>',
+ sticks:'<svg viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 014 4v2a3 3 0 01-5.2 2L15 14H9l-1.8 2A3 3 0 012 14v-2a4 4 0 014-4z"/><path d="M7 11v3M5.5 12.5h3M16 11.5h.01M18 13.5h.01"/></svg>'
+};
+var state={cat:'all',q:''};
+var chips=document.getElementById('chips'),grid=document.getElementById('grid'),empty=document.getElementById('empty'),count=document.getElementById('count'),intro=document.getElementById('intro');
+
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function chip(key,label){
+  var b=el('button','chip',label);b.type='button';
+  b.setAttribute('aria-pressed',String(state.cat===key));
+  b.onclick=function(){state.cat=key;render()};return b}
+function link(text,url){var a=el('a',null,text);a.href=url;a.target='_blank';a.rel='noopener noreferrer sponsored';return a}
+function fact(label,text){var d=el('div');d.appendChild(el('b',null,label));d.appendChild(document.createTextNode(text));return d}
+
+function render(){
+  chips.textContent='';
+  chips.appendChild(chip('all','All'));
+  Object.keys(CATS).forEach(function(k){chips.appendChild(chip(k,CATS[k].label))});
+  var q=state.q.trim().toLowerCase();
+  var list=P.filter(function(p){
+    return (state.cat==='all'||p[0]===state.cat)&&(!q||(p.slice(1,6).join(' ')+' '+CATS[p[0]].label).toLowerCase().indexOf(q)>-1)});
+  intro.textContent='';
+  if(state.cat==='all'){
+    intro.appendChild(el('h2',null,'All trending picks'));
+    intro.appendChild(el('p',null,'Twenty-four products across four categories. Every card tells you what it is, why people want it, who it is best for and what to check before you buy.'));
+  }else{
+    var c0=CATS[state.cat];
+    intro.appendChild(el('h2',null,c0.label));
+    c0.intro.forEach(function(t){intro.appendChild(el('p',null,t))});
+  }
+  grid.textContent='';
+  list.forEach(function(p){
+    var c=CATS[p[0]],name=p[1],enc=encodeURIComponent(name);
+    var card=el('article','card');card.style.setProperty('--cat',c.color);
+    var tile=el('div','tile');
+    if(p[6])tile.appendChild(el('div','hot','Trending now'));
+    var ico=el('div','ico');ico.innerHTML=ICONS[p[0]];tile.appendChild(ico);
+    tile.appendChild(el('span','nm',name.split(' ').slice(0,2).join(' ')));
+    var body=el('div','body');
+    body.appendChild(el('div','cat',c.label));
+    body.appendChild(el('h3',null,name));
+    body.appendChild(el('p',null,p[2]));
+    var facts=el('div','facts');
+    facts.appendChild(fact('Why it is trending',p[3]));
+    facts.appendChild(fact('Best for',p[4]));
+    facts.appendChild(fact('Buying tip',p[5]));
+    body.appendChild(facts);
+    var buy=el('div','buy');
+    STORES.forEach(function(s){buy.appendChild(link(s[0],s[1]+enc))});
+    body.appendChild(buy);
+    card.appendChild(tile);card.appendChild(body);grid.appendChild(card)});
+  empty.hidden=list.length>0;
+  count.textContent=String(P.length);
+}
+(function(){
+  var hl=document.getElementById('hotlist');
+  P.filter(function(p){return p[6]}).slice(0,5).forEach(function(p){
+    var li=el('li');var d=el('i');d.style.setProperty('--c',CATS[p[0]].color);li.appendChild(d);li.appendChild(document.createTextNode(p[1]));hl.appendChild(li)});
+  var t=document.getElementById('tick'),words=['Beauty','Fashion','Action Figures','Joysticks','Trending now','New drops weekly'];
+  for(var r=0;r<2;r++)words.forEach(function(w){t.appendChild(el('span',null,w))});
+})();
+document.getElementById('q').addEventListener('input',function(e){state.q=e.target.value;render()});
+render();
+</script>
+
+</body>
+</html>
